@@ -1,0 +1,56 @@
+.BodyContainer {
+  background-color: #f0f0f0;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.CompaniesContainer {
+  background-color: #f0f0f0;
+  height: 90vh;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.ImportBox {
+  width: 400px;
+  min-height: 30%;
+  background-color: white;
+  box-shadow: 1px 5px 10px 2px #888888;
+  border-radius: 6px;
+  padding: 30px 50px 20px 50px;
+  color: #212529;
+  align-items: center;
+  align-self: center;
+}
+
+input {
+  font-size: 15px !important;
+}
+
+.button {
+  margin: auto;
+  width: 100%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-top: 15px;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-size: 15px;
+  padding-top: 5px;
+  font-weight: 500;
+}
+
+.success {
+  color: green;
+  text-align: center;
+  font-size: 15px;
+  padding-top: 5px;
+  font-weight: 500;
+}

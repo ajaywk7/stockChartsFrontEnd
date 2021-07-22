@@ -1,0 +1,74 @@
+.AppContainer {
+  background-color: #212529;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.AuthBox {
+  width: 500px;
+  background-color: rgb(247, 247, 247);
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 50px;
+  padding-top: 60px;
+  padding-bottom: 100px;
+  color: #212529;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.AuthButton {
+  margin: auto;
+  width: 100%;
+}
+
+.Tabs {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  overflow: hidden;
+  width: 500px;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link,
+.nav-link {
+  font-size: 18px;
+  font-weight: 700px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 0px !important;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link,
+.nav-link.active {
+  border: 0px !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+/* nav items */
+.navbar-nav .nav-link {
+  padding-left: 20px !important;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+/*navbar color*/
+.navbar {
+  background-color: #3d3a4b !important;
+}
+
+.body {
+  background-color: rgb(247, 247, 247);
+}
