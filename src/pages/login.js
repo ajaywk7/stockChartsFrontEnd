@@ -1,16 +1,21 @@
 import React from "react";
-import { Form, Button, Tabs, Tab } from "react-bootstrap";
+import { Form, Button, Tabs, Tab, Alert } from "react-bootstrap";
 import { AuthContext } from "../context/AuthProvider";
 import "./styles.css";
 export default function Login(props) {
   const [tab, setTab] = React.useState("Login");
   const [username, setUsername] = React.useState();
   const [password, setPassword] = React.useState();
-  const { login } = React.useContext(AuthContext);
+  const { login, register } = React.useContext(AuthContext);
+  const [error, setError] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   const submit = async () => {
     if (tab === "Login") {
       console.log(await login(username, password));
+    }
+    if (tab === "Register") {
+      await register(username, password, setError, setSuccess);
     }
   };
 
@@ -27,6 +32,17 @@ export default function Login(props) {
         </Tabs>
       </div>
       <div className="AuthBox">
+        {tab === "Register" && (
+          <div>
+            {success === true && error === false && (
+              <Alert variant={"success"}>successfully created</Alert>
+            )}
+            {error === true && success === false && (
+              <Alert variant={"danger"}>Invalid</Alert>
+            )}
+          </div>
+        )}
+
         <Form.Group className="mb-3">
           <Form.Label>Username</Form.Label>
           <Form.Control

@@ -8,11 +8,12 @@ import {
   Col,
 } from "react-bootstrap";
 import { addCompany } from "../../api/companyApi";
+import { getSectors } from "../../api/sectorsApi";
 import {
   addStockExchange,
   getStockExchanges,
 } from "../../api/stockExchangeApi";
-import "./styles.css";
+import "../styles.css";
 
 export function AddCompany(props) {
   const [editData, setEditData] = React.useState({
@@ -26,8 +27,13 @@ export function AddCompany(props) {
   const [error, setError] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [stockExchanges, setStockExchanges] = React.useState([]);
+  const [sectors, setSectors] = React.useState([]);
 
   useEffect(async () => {
+    var response = await getSectors();
+    if (response.error !== true) {
+      await setSectors(response.message);
+    }
     var StockExchanges = (await getStockExchanges()).message;
     setStockExchanges(StockExchanges);
   }, []);
@@ -120,13 +126,27 @@ export function AddCompany(props) {
         </InputGroup>
         <InputGroup className="mb-3">
           <InputGroup.Text>sectorId</InputGroup.Text>
-          <FormControl
+          <select
+            className="form-select"
+            defaultValue={-1}
+            onChange={async (t) => {
+              await setEditData({ ...editData, sectorId: t.target.value });
+            }}
+          >
+            <option value={-1} disabled>
+              select sector
+            </option>
+            {sectors.map((key, index) => {
+              return <option value={key.id}>{key.name}</option>;
+            })}
+          </select>
+          {/* <FormControl
             aria-label="First name"
             value={editData.sectorId}
             onChange={(target) =>
               setEditData({ ...editData, sectorId: target.target.value })
             }
-          />
+          /> */}
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>

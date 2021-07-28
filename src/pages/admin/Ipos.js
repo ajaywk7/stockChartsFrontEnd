@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { getIpos } from "../../api/companyApi";
+import { getIpos, getUpcomingIpos } from "../../api/companyApi";
+import { AddIpo } from "../../components/Ipo/AddIpo";
 import Ipo from "../../components/Ipo/Ipo";
 import PagesContainer from "../../components/pagesContainer";
 
@@ -8,11 +9,19 @@ export default function Ipos(props) {
   const [ipos, setIpos] = React.useState([]);
 
   const refresh = async () => {
-    var response = await getIpos();
+    var response =
+      props.admin === false ? await getUpcomingIpos() : await getIpos();
     var result = [];
     if (response.error !== true) {
       result = response.message.map((data) => {
-        return <Ipo key={data.id} data={data} refresh={refresh} admin={true} />;
+        return (
+          <Ipo
+            key={data.id}
+            data={data}
+            refresh={refresh}
+            admin={props.admin !== false ? true : false}
+          />
+        );
       });
       setIpos(result);
     }
@@ -38,15 +47,19 @@ export default function Ipos(props) {
         <Row className="pt-4">
           <Col>
             {" "}
-            <h3 className=" text-uppercase">Ipos</h3>
+            <h3 className=" text-uppercase">
+              {props.admin === false && "Upcoming "}Ipos
+            </h3>
           </Col>
-          <Col>
-            <Button className="w-100" onClick={showAdd}>
-              Add Ipo
-            </Button>
-          </Col>
+          {props.admin !== false && (
+            <Col className="d-flex justify-content-end align-items-top">
+              <Button className=" AddButton" onClick={showAdd}>
+                Add Ipo
+              </Button>
+            </Col>
+          )}
         </Row>
-        {/* {add === true && <AddCompany refresh={refresh} hideAdd={hideAdd} />} */}
+        {add === true && <AddIpo refresh={refresh} hideAdd={hideAdd} />}
         <div className="pt-3">
           <PagesContainer data={ipos} />
         </div>

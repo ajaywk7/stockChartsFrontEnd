@@ -40,9 +40,9 @@ export default function Homepage(props) {
           <Container>
             <Navbar.Brand href="">Stock Charts</Navbar.Brand>
             <Nav className="ml-auto">
-              <Nav.Link href="">Upcoming IPOs</Nav.Link>
+              <Nav.Link href="ipos">Upcoming IPOs</Nav.Link>
               <Nav.Link href="companies">Companies</Nav.Link>
-              <Nav.Link href="compare">Compare</Nav.Link>
+              <Nav.Link href="/">Compare</Nav.Link>
               <Nav.Link href="/" onClick={logout}>
                 {" "}
                 Logout{" "}
@@ -63,9 +63,9 @@ export default function Homepage(props) {
         )}
         {user.role === USER && (
           <Switch>
-            <Route exact path="/" component={uIpos} />
+            <Route exact path="/ipos" component={uIpos} />
             <Route exact path="/companies" component={uCompanies} />
-            <Route exact path="/compare" component={ComparePage} />
+            <Route exact path="/" component={ComparePage} />
           </Switch>
         )}
       </BrowserRouter>

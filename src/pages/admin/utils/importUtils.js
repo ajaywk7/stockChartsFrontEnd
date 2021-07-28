@@ -49,7 +49,9 @@ function processJson(content) {
     time.setUTCHours(ts[0]);
     time.setUTCMinutes(ts[1]);
     time.setUTCSeconds(ts[2]);
+    time.setMonth(ds[1] - 1, ds[0]);
     temp.time = time.toISOString();
+    // console.log(temp.time);
     return temp;
   });
 }

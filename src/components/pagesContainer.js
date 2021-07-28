@@ -4,10 +4,14 @@ import { Container } from "react-bootstrap";
 import "./styles.css";
 
 export default function PagesContainer(props) {
-  const N = 5;
+  const [N, setN] = React.useState((window.innerHeight - 200) / 100);
   const [total, setTotal] = React.useState();
-  const [current, setCurrent] = React.useState(0);
+  const [current, setCurrent] = React.useState();
   const [pageData, setPageData] = React.useState();
+
+  useEffect(async () => {
+    await setN((window.innerHeight - 200) / 100);
+  }, [window.innerHeight]);
 
   useEffect(async () => {
     var offset = current * N;
@@ -15,13 +19,17 @@ export default function PagesContainer(props) {
   }, [current]);
 
   useEffect(async () => {
-    console.log("varthu");
-    await setTotal(Math.ceil(props.data.length / N));
+    var total = total;
+    var newtotal = Math.ceil(props.data.length / N);
     var offset = current * N;
+    if (props.data.length < N) {
+      offset = 0;
+      await setCurrent(0);
+    }
+
+    await setTotal(newtotal);
     await setPageData(props.data.slice(offset, offset + N));
   }, [props.data]);
-
-  useEffect(() => console.log(pageData), [pageData]);
 
   return (
     <Container fluid className="p-0">
@@ -32,11 +40,12 @@ export default function PagesContainer(props) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            alignItems: "center",
             marginTop: 10,
             padding: 0,
           }}
         >
-          No records found
+          <h4 className="text-secondary">No records found</h4>
         </Container>
       )}
       {pageData && pageData.length > 0 && (

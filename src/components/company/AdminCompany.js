@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, Card, Col, Row, Button, Modal } from "react-bootstrap";
 import { EditCompany } from "./EditCompany";
-import "./styles.css";
+import "../styles.css";
 import { ViewCompany } from "./ViewCompany";
 
 export default function AdminCompany(props) {
@@ -46,19 +46,22 @@ export default function AdminCompany(props) {
         </Col>
 
         <Col sm={2}>
-          {data.stockExchangeList.map((s) => " " + s + " ").toString()}
+          {data.stockExchangeList.length > 0 ? (
+            <div className="text-uppercase">
+              {data.stockExchangeList.map((s) => " " + s + " ").toString()}
+            </div>
+          ) : (
+            "Not listed"
+          )}
         </Col>
-        <Col sm={3}>
-          <Button
-            className="w-100 bg-secondary border-secondary"
-            onClick={showView}
-          >
+        <Col sm={2}>
+          <Button className="ViewButton" onClick={showView}>
             View
           </Button>
         </Col>
         {props.admin === true && (
           <Col sm={2}>
-            <Button className="w-100 " onClick={showEdit}>
+            <Button className="EditButton" onClick={showEdit}>
               Edit
             </Button>
           </Col>

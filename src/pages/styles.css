@@ -57,6 +57,28 @@
   border-color: #0d6efd;
 }
 
+.AddButton {
+  border-radius: 10px !important;
+  width: 80%;
+  font-size: medium;
+  align-self: flex-end;
+  background-color: #4ecdc4 !important;
+  border-color: gray !important;
+  color: black !important;
+  font-size: 13px !important;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.btn :focus {
+  outline: none !important;
+}
+
+.AddButton:hover {
+  transform: scale(1.03);
+}
+
 /* nav items */
 .navbar-nav .nav-link {
   padding-left: 20px !important;

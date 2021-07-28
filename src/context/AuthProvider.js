@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { authlogin, authregister } from "../api/authApi";
 
 // this is the equivalent to the createStore method of Redux
 // https://redux.js.org/api/createstore
@@ -8,28 +9,34 @@ const AuthContext = React.createContext();
 function AuthProvider(props) {
   const [user, setUser] = React.useState(null);
 
-  useEffect(() => {
+  useEffect(async () => {
     // Update the document title using the browser API
+    console.log(user);
     if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
+      await localStorage.setItem("user", JSON.stringify(user));
     } else {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
   }, [user]);
 
   const login = async (username, password) => {
-    if (username === "user" && password === "user") {
-      await setUser({
-        username: "user",
-        role: "user",
-        accessToken: "xxx",
-      });
-    } else if (username === "admin" && password === "admin") {
-      await setUser({
-        username: "admin",
-        role: "admin",
-        accessToken: "xxx",
-      });
+    var data = {
+      username: username,
+      password: password,
+    };
+    //console.log(data);
+    var response = await authlogin(data);
+    console.log(response);
+    console.log(response);
+
+    if (response.error === false) {
+      var user = {
+        username: username,
+        role: username === "admin" ? "admin" : "user",
+        token: response.message.jwttoken,
+      };
+      await localStorage.setItem("user", JSON.stringify(user));
+      await setUser(user);
     } else {
       return {
         message: "Authentication failed",
@@ -37,7 +44,22 @@ function AuthProvider(props) {
     }
   };
 
-  const register = async () => {};
+  const register = async (username, password, se, ss) => {
+    var data = {
+      username: username,
+      password: password,
+    };
+    //console.log(data);
+    var response = await authregister(data);
+    console.log(response);
+    if (response.error === false) {
+      await ss(true);
+      await se(false);
+    } else {
+      await se(true);
+      await ss(false);
+    }
+  };
 
   const logout = async () => {
     localStorage.setItem("user", null);

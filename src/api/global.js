@@ -8,15 +8,28 @@ class ApiResponse {
   }
 }
 
+async function getToken() {
+  var user = JSON.parse(await localStorage.getItem("user"));
+
+  if (user) {
+    return user.token;
+  }
+}
+
 export async function get(url) {
   try {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Access-Control-Allow-Origin", "*");
+    var token = await getToken();
+    if (token) {
+      myHeaders.append("Authorization", "Bearer " + token);
+    }
     const response = await fetch(encodeURI(url), {
       method: "get",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        Accept: "application/json",
-      },
+      headers: myHeaders,
     });
+
     const results = await response.json();
     return new ApiResponse(response.status, results, undefined);
   } catch (e) {
@@ -29,6 +42,14 @@ export const post = async (body, url) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Access-Control-Allow-Origin", "*");
+  var token = await getToken();
+  var token = await getToken();
+  if (token) {
+    myHeaders.append("Authorization", "Bearer " + token);
+  }
+  // if (getToken() != null) {
+  //   myHeaders.append("Authorization", "Bearer " + getToken());
+  // }
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
@@ -58,6 +79,10 @@ export const put = async (body, url) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Access-Control-Allow-Origin", "*");
+  var token = await getToken();
+  if (token) {
+    myHeaders.append("Authorization", "Bearer " + token);
+  }
   var requestOptions = {
     method: "PUT",
     headers: myHeaders,

@@ -19,7 +19,7 @@ export default function ImportData(props) {
 
   const upload = async () => {
     let jsonArary = await validateAndConvert(file, setErrorMessage);
-    console.log(jsonArary);
+    // console.log(jsonArary);
     await apiCall(jsonArary, setErrorMessage);
   };
 
@@ -33,7 +33,7 @@ export default function ImportData(props) {
             type="file"
             onChange={onFileChange}
           />
-          <Button className="button" onClick={upload}>
+          <Button className="AddButton w-100 mt-3 mb-2" onClick={upload}>
             Import
           </Button>
           {error === true && <p className="error">{message}</p>}

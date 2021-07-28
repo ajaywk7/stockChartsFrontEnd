@@ -27,8 +27,24 @@
   align-self: center;
 }
 
+.CompareBox {
+  width: 600px;
+  min-height: 30%;
+  background-color: white;
+  box-shadow: 1px 5px 10px 2px #888888;
+  border-radius: 6px;
+  padding: 30px 50px 20px 50px;
+  color: #212529;
+  align-items: center;
+  align-self: center;
+}
+
 input {
   font-size: 15px !important;
+}
+
+.very-small {
+  font-size: 13px;
 }
 
 .button {

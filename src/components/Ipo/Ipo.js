@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Container, Card, Col, Row, Button, Modal } from "react-bootstrap";
 import { getCompany } from "../../api/companyApi";
 import { EditCompany, EditIpo } from "./EditIpo";
-import "./styles.css";
+import "../styles.css";
 import { ViewCompany } from "./ViewIpo";
 
 export default function Ipo(props) {

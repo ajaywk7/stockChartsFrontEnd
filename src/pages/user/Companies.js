@@ -1,5 +1,6 @@
 import { Container } from "react-bootstrap";
+import Comp from "../admin/Companies";
 
 export default function Companies(props) {
-  return <Container>Companies</Container>;
+  return <Comp admin={false}></Comp>;
 }

@@ -33,8 +33,8 @@ export default function StockExchanges(props) {
             {" "}
             <h3 className=" text-uppercase">Stock Exchanges</h3>
           </Col>
-          <Col>
-            <Button className="w-100" onClick={showAdd}>
+          <Col className="d-flex justify-content-end align-items-top">
+            <Button className=" AddButton" onClick={showAdd}>
               Add Stock Exchange
             </Button>
           </Col>

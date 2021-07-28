@@ -11,7 +11,7 @@ import {
   DropdownButton,
   Form,
 } from "react-bootstrap";
-import "./styles.css";
+import "../styles.css";
 import DateTimePicker from "react-datetime-picker";
 import { addIpo } from "../../api/companyApi";
 
@@ -99,9 +99,9 @@ export function EditIpo(props) {
         <InputGroup className="mb-3">
           <InputGroup.Text>openDateTime</InputGroup.Text>
           <DateTimePicker
-            value={Date.parse(editData.openDateTime)}
-            onChange={(time) => {
-              setEditData({
+            value={new Date(editData.openDateTime)}
+            onChange={async (time) => {
+              await setEditData({
                 ...editData,
                 openDateTime: time.toISOString(),
               });

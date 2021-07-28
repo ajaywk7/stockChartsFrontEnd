@@ -8,12 +8,20 @@ export const getCompanies = async () => {
   return await get(BASE_URL + "all");
 };
 
+export const searchCompanies = async (seacrhText) => {
+  return await get(BASE_URL + "search/?searchText=" + seacrhText);
+};
+
 export const getCompany = async (id) => {
   return await get(BASE_URL + "?id=" + id);
 };
 
 export const getIpos = async () => {
   return await get(BASE_URL + "ipos");
+};
+
+export const getUpcomingIpos = async () => {
+  return await get(BASE_URL + "ipos/upcoming");
 };
 
 export const getCompanySEList = async (id) => {

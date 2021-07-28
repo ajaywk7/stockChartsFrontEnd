@@ -16,7 +16,7 @@ import {
   addCompanyToStockExchang,
   getStockExchanges,
 } from "../../api/stockExchangeApi";
-import "./styles.css";
+import "../styles.css";
 
 export function EditCompany(props) {
   const data = props.data;
@@ -148,8 +148,12 @@ export function EditCompany(props) {
               <select
                 className="w-100 p-1 mt-1"
                 aria-label="Default select example"
+                defaultValue="disabled"
                 onChange={(target) => setStockExchange(target.target.value)}
               >
+                <option value="disabled" disabled>
+                  SELECT EXCHANGE
+                </option>
                 {stockExchanges.map((se) => {
                   return <option value={se.id}>{se.name}</option>;
                 })}

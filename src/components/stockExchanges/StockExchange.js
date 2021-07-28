@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Container, Card, Col, Row, Button, Modal } from "react-bootstrap";
-import "./styles.css";
+import "../styles.css";
 
 export default function StockExchange(props) {
   var data = props.data;

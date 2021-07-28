@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import { addSector } from "../../api/sectorsApi";
 import { addStockExchange } from "../../api/stockExchangeApi";
-import "./styles.css";
+import "../styles.css";
 
 export function AddStockExchange(props) {
   const [editData, setEditData] = React.useState({

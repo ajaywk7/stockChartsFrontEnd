@@ -1,44 +1,37 @@
 import React, { useEffect } from "react";
-import {
-  Button,
-  Modal,
-  InputGroup,
-  FormControl,
-  Row,
-  Col,
-} from "react-bootstrap";
-import { addCompany } from "../../api/companyApi";
-import {
-  addStockExchange,
-  getStockExchanges,
-} from "../../api/stockExchangeApi";
-import "./styles.css";
+import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
+import "../styles.css";
+import DateTimePicker from "react-datetime-picker";
+import { addIpo, getCompanies } from "../../api/companyApi";
 
-export function AddCompany(props) {
+export function AddIpo(props) {
   const [editData, setEditData] = React.useState({
-    companyName: "",
-    turnover: "",
-    ceo: "",
-    boardOfDirectors: "",
-    companyBrief: "",
-    sectorId: "",
+    pricePerShare: "",
+    totalNumberOfShares: "",
+    companyId: "",
+    openDateTime: new Date(Date.now()).toISOString(),
   });
   const [error, setError] = React.useState(false);
   const [message, setMessage] = React.useState("");
-  const [stockExchanges, setStockExchanges] = React.useState([]);
+  const [companies, setCompanies] = React.useState([]);
 
   useEffect(async () => {
-    var StockExchanges = (await getStockExchanges()).message;
-    setStockExchanges(StockExchanges);
+    var response = await getCompanies();
+    if (response.error !== true) {
+      await setCompanies(response.message);
+    }
   }, []);
 
-  const add = async () => {
-    var response = await addCompany(editData);
-    setError(response.error);
-    console.log(response);
-    setMessage(response.errorMessage);
-    if (response.error === false) {
-      props.hideAdd();
+  const update = async () => {
+    var res = await addIpo(editData);
+    if (res.error === true) {
+      await setError(res.error);
+      setMessage(res.errorMessage);
+    } else {
+      await props.hideAdd();
+
+      await setError(false);
+      setMessage("Successfully Added!");
     }
     await props.refresh();
   };
@@ -53,7 +46,7 @@ export function AddCompany(props) {
       scrollable={true}
     >
       <Modal.Header closeButton>
-        <Modal.Title>{"Add Company"}</Modal.Title>
+        <Modal.Title>{"Edit"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {error === true && (
@@ -64,68 +57,67 @@ export function AddCompany(props) {
         )}
 
         <InputGroup className="mb-3 pt-2">
-          <InputGroup.Text>Company name</InputGroup.Text>
+          <InputGroup.Text>Company id</InputGroup.Text>
+          <select
+            className="form-select"
+            defaultValue={-1}
+            onChange={async (t) => {
+              await setEditData({
+                ...editData,
+                companyId: t.target.value,
+              });
+            }}
+          >
+            <option value={-1} disabled>
+              select Company
+            </option>
+            {companies.map((key, index) => {
+              return <option value={key.id}>{key.companyName}</option>;
+            })}
+          </select>
+          {/* <FormControl
+            aria-label="First name"
+            defaultValue={editData.companyId}
+            value={editData.companyId}
+            onChange={(target) =>
+              setEditData({ ...editData, companyId: target.target.value })
+            }
+          /> */}
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text>pricePerShare</InputGroup.Text>
           <FormControl
             aria-label="First name"
-            defaultValue={editData.companyName}
-            value={editData.companyName}
+            value={editData.pricePerShare}
             onChange={(target) =>
-              setEditData({ ...editData, companyName: target.target.value })
+              setEditData({ ...editData, pricePerShare: target.target.value })
             }
           />
         </InputGroup>
+
         <InputGroup className="mb-3">
-          <InputGroup.Text>turnover</InputGroup.Text>
+          <InputGroup.Text>totalNumberOfShares</InputGroup.Text>
           <FormControl
             aria-label="First name"
-            value={editData.turnover}
-            onChange={(target) =>
-              setEditData({ ...editData, turnover: target.target.value })
-            }
-          />
-        </InputGroup>
-        <InputGroup className="mb-3">
-          <InputGroup.Text>ceo</InputGroup.Text>
-          <FormControl
-            aria-label="First name"
-            value={editData.ceo}
-            onChange={(target) =>
-              setEditData({ ...editData, ceo: target.target.value })
-            }
-          />
-        </InputGroup>
-        <InputGroup className="mb-3">
-          <InputGroup.Text>boardOfDirectors</InputGroup.Text>
-          <FormControl
-            aria-label="First name"
-            value={editData.boardOfDirectors}
+            value={editData.totalNumberOfShares}
             onChange={(target) =>
               setEditData({
                 ...editData,
-                boardOfDirectors: target.target.value,
+                totalNumberOfShares: target.target.value,
               })
             }
           />
         </InputGroup>
         <InputGroup className="mb-3">
-          <InputGroup.Text>companyBrief</InputGroup.Text>
-          <FormControl
-            aria-label="First name"
-            as="textarea"
-            value={editData.companyBrief}
-            onChange={(target) =>
-              setEditData({ ...editData, companyBrief: target.target.value })
-            }
-          />
-        </InputGroup>
-        <InputGroup className="mb-3">
-          <InputGroup.Text>sectorId</InputGroup.Text>
-          <FormControl
-            aria-label="First name"
-            value={editData.sectorId}
-            onChange={(target) =>
-              setEditData({ ...editData, sectorId: target.target.value })
-            }
+          <InputGroup.Text>openDateTime</InputGroup.Text>
+          <DateTimePicker
+            value={new Date(editData.openDateTime)}
+            onChange={async (time) => {
+              await setEditData({
+                ...editData,
+                openDateTime: time.toISOString(),
+              });
+            }}
           />
         </InputGroup>
       </Modal.Body>
@@ -133,8 +125,8 @@ export function AddCompany(props) {
         <Button variant="secondary" onClick={props.hideAdd}>
           Close
         </Button>
-        <Button variant="primary" onClick={add}>
-          add
+        <Button variant="primary" onClick={update}>
+          save
         </Button>
       </Modal.Footer>
     </Modal>

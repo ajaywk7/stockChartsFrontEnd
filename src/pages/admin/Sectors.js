@@ -42,8 +42,8 @@ export default function Sectors(props) {
             {" "}
             <h3 className=" text-uppercase">Sectors</h3>
           </Col>
-          <Col>
-            <Button className="w-100" onClick={showAdd}>
+          <Col className="d-flex justify-content-end align-items-top">
+            <Button className=" AddButton" onClick={showAdd}>
               Add Sector
             </Button>
           </Col>
